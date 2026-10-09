@@ -9,29 +9,11 @@ class NodoGeneral<T> {
     public void agregarHijo(NodoGeneral<T> hijo) { hijos.add(hijo); }
     public T getDato() { return dato; }
     public List<NodoGeneral<T>> getHijos() { return hijos; }
-
-    // Cuenta este nodo más todos sus descendientes (recursivo)
-    public int contarNodos() {
-        int total = 1;
-        for (NodoGeneral<T> hijo : hijos) {
-            total += hijo.contarNodos();
-        }
-        return total;
-    }
-
-    // Imprime el árbol con sangría según el nivel (recursivo)
-    public void imprimir(int nivel) {
-        String sangria = "    ".repeat(nivel);
-        String marca = (nivel == 0) ? "" : "|__ ";
-        System.out.println(sangria + marca + dato + " (nivel " + nivel + ")");
-        for (NodoGeneral<T> hijo : hijos) {
-            hijo.imprimir(nivel + 1);
-        }
-    }
 }
 
-public class Main {
+public class Organigrama {
     public static void main(String[] args) {
+        // Se crean los nodos
         NodoGeneral<String> empresa = new NodoGeneral<>("Empresa");
         NodoGeneral<String> tecnologia = new NodoGeneral<>("tecnologia");
         NodoGeneral<String> finanzas = new NodoGeneral<>("finanzas");
@@ -43,6 +25,7 @@ public class Main {
         NodoGeneral<String> seleccion = new NodoGeneral<>("seleccion");
         NodoGeneral<String> soporte = new NodoGeneral<>("soporte");
 
+        // Se arma la jerarquía
         empresa.agregarHijo(tecnologia);
         empresa.agregarHijo(finanzas);
         empresa.agregarHijo(recursosHumanos);
@@ -55,9 +38,33 @@ public class Main {
 
         recursosHumanos.agregarHijo(seleccion);
 
-        System.out.println("Raiz: " + empresa.getDato());
-        System.out.println("Total de nodos: " + empresa.contarNodos());
+      
+        System.out.println("Nivel 0 (raiz): " + empresa.getDato());
         System.out.println();
-        empresa.imprimir(0);
+        System.out.println("Nivel 1 (hijos de " + empresa.getDato() + ":)") ;
+        System.out.println(empresa.getHijos().get(0).getDato());
+        System.out.println(empresa.getHijos().get(1).getDato());
+        System.out.println(empresa.getHijos().get(2).getDato());
+        System.out.println();
+
+        System.out.println("Nivel 2");
+        System.out.println("Hijos de " + tecnologia.getDato());
+    
+        System.out.println();
+        System.out.println(tecnologia.getHijos().get(0).getDato());
+        System.out.println(tecnologia.getHijos().get(1).getDato());
+
+        System.out.println("Hijos de " + finanzas.getDato());
+    
+        System.out.println();
+        System.out.println(finanzas.getHijos().get(0).getDato());
+        System.out.println(finanzas.getHijos().get(1).getDato());
+        System.out.println();
+
+        System.out.println("Hijos de " + recursosHumanos.getDato());
+        System.out.println(recursosHumanos.getHijos().get(0).getDato());
+
+
+
     }
 }
